@@ -8,6 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
+      - name: Installing needed Ubuntu dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -qq libasound2-dev libssl-dev libpulse-dev libdbus-1-dev portaudio19-dev
 
       - name: Set up Go
         uses: actions/setup-go@v3
@@ -19,11 +24,13 @@ jobs:
   linter:
     name: Run linter
     runs-on: ubuntu-latest
-    steps:
-      - name: install dependencies
-        run: |
-          sudo apt install libappindicator3-dev gir1.2-appindicator3-0.1
+    steps: 
       - uses: actions/checkout@v2
+      
+      - name: Installing needed Ubuntu dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -qq libasound2-dev libssl-dev libpulse-dev libdbus-1-dev portaudio19-dev
 
       - name: Set up Go
         uses: actions/setup-go@v3
