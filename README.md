@@ -17,9 +17,10 @@
 
   <p align="center">
     Open source library and tray application that show battery percentage for supported devices
-    <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
-    <br />
+   <!-- <br />
+    <a href="https://github.com/Simaky/Bathyx/issues"><strong>Explore the docs »</strong></a>
+ -->    
+<br />
     <br />
     <a href="https://github.com/Simaky/Bathyx/issues">Report Bug</a>
     ·
@@ -57,14 +58,14 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Bathyx Screen Shot][product-screenshot]](https://example.com)
+![Bathyx Screen Shot][product-screenshot]
 
 Open source library and tray application that show battery percentage for supported devices.
 For now - I add devices that I have and I am using every day.
 If you want me to add your device, please create an request issue and I'll check what could I do.
 
 Implemented features:
-* Multi OS tray application with battery percentage
+* Cross platform tray application with battery percentage
 * Open source library that give you ability to use device data in your project, just import this lib
 * Support HyperX Cloud Flight S headphones
 
@@ -167,4 +168,4 @@ Distributed under the MIT License. See `LICENSE.md` for more information.
 [issues-url]: https://github.com/Simaky/Bathyx/issues
 [license-shield]: https://img.shields.io/github/license/Simaky/Bathyx.svg?style=for-the-badge
 [license-url]: https://github.com/Simaky/Bathyx/blob/master/LICENSE.txt
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: .github/screenshot.png
