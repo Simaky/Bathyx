@@ -13,7 +13,7 @@
     <!--<img src="images/logo.png" alt="Logo" width="80" height="80">-->
   </a>
 
-<h3 align="center">Bathyx</h3>
+<h3 id="readme-top" align="center">Bathyx</h3>
 
   <p align="center">
     Open source library and tray application that show battery percentage for supported devices
