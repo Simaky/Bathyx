@@ -19,6 +19,7 @@ const (
 	validResponseLength = 62
 
 	defaultReadTimeout = time.Second * 30
+	maxBufferSize      = 2048
 )
 
 // getCloudFlightSInfo returns 'Cloud Flight S' information.
@@ -73,13 +74,14 @@ func isEnabled(device *hid.Device) bool {
 	}
 
 	buf, read, err := readWithTimeout(device, defaultReadTimeout)
-	if err != nil || len(buf) == 0 || read == 0 {
+	if read == 0 || err != nil || len(buf) == 0 {
 		return false
 	}
 	return true
 }
 
-// askBatteryStatus sends request battery percentage message to the device .
+// askBatteryStatus sends request battery percentage message to the device.
+// nolint: gomnd
 func askBatteryStatus(device *hid.Device) error {
 	buffer := []byte{
 		0x06,
@@ -137,13 +139,13 @@ func readWithTimeout(device *hid.Device, timeout time.Duration) ([]byte, int, er
 		err  error
 	)
 
-	buf := make([]byte, 2048)
+	buf := make([]byte, maxBufferSize)
 	ctx, cancel := context.WithCancel(context.Background())
 
 	go func() {
 		defer cancel()
 
-		//TODO Update lib to support ctx with cancel
+		// TODO Update lib to support ctx with cancel
 		read, err = device.Read(buf)
 		if err != nil {
 			err = fmt.Errorf("can't read from device, err: %w", err)

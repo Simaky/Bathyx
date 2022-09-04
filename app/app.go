@@ -28,14 +28,14 @@ func RunTray(appName string) {
 
 func (t *TrayApp) onReady() {
 	systray.SetIcon(resources.HeadphonesNotConnectedIcon)
-	//TODO show always if connected more than 1 device
+	// TODO show always if connected more than 1 device
 	systray.SetTitle("Bathyx")
 	systray.SetTooltip("Waiting for headphones...")
 
 	systray.AddMenuItem(t.appName, "https://github.com/Simaky/Bathyx").Disable()
 	systray.AddSeparator()
 
-	//TODO show only if 1 device is connected
+	// TODO show only if 1 device is connected
 	item := systray.AddMenuItem("HyperX Cloud Flight S: waiting...", "")
 	item.SetIcon(resources.HeadphonesIcon)
 	item.Disable()
@@ -44,23 +44,18 @@ func (t *TrayApp) onReady() {
 	exit := systray.AddMenuItem("Quit", "Quit the whole app")
 
 	go func() {
-		select {
-		case <-exit.ClickedCh:
-			os.Exit(0)
-		}
+		<-exit.ClickedCh
+		os.Exit(0)
 	}()
 
 	go loadDevices(context.Background(), devices.New(), item)
 }
 
-func (t *TrayApp) onExit() {}
+func (*TrayApp) onExit() {}
 
 func loadDevices(ctx context.Context, d *devices.Devices, item *systray.MenuItem) {
 	for {
-		select {
-		case deviceInfo := <-d.HyperX.CloudFlightS(ctx, time.Minute*1):
-			processDeviceInfo(deviceInfo, item)
-		}
+		processDeviceInfo(<-d.HyperX.CloudFlightS(ctx, time.Minute*1), item)
 	}
 }
 
@@ -77,6 +72,7 @@ func processDeviceInfo(deviceInfo types.DeviceInfo, item *systray.MenuItem) {
 	setBatteryPercent(item, deviceInfo.BatteryPercentage)
 }
 
+// nolint: gomnd
 func setBatteryPercent(menuItem *systray.MenuItem, percentage int) {
 	title := fmt.Sprintf("HyperX Cloud Flight S: %d%% 🔋", percentage)
 	systray.SetTooltip(title)

@@ -2,6 +2,7 @@ package hyperx
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/Simaky/Bathyx/devices/types"
@@ -44,13 +45,12 @@ func (d *Devices) CloudFlightS(ctx context.Context, timeout time.Duration) chan 
 	return deviceInfoC
 }
 
-func (d *Devices) processError(err error, deviceInfoC chan<- types.DeviceInfo) {
+func (*Devices) processError(err error, deviceInfoC chan<- types.DeviceInfo) {
 	var deviceInfo types.DeviceInfo
 
-	switch err {
-	case types.ErrDeviceNotEnabled, types.ErrDeviceNotConnected:
+	if errors.Is(err, types.ErrDeviceNotEnabled) || errors.Is(err, types.ErrDeviceNotConnected) {
 		deviceInfo.Connected = false
-	default:
+	} else {
 		deviceInfo.Error = err
 	}
 
