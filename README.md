@@ -122,6 +122,7 @@ To use Bathyx as library just simply do:
 - [x] Add Tray application
 - [x] Add README.md
 - [x] Add "components" document to easily copy & paste sections of the readme
+- [ ] Use interfaces to make adding new devices much more easier
 - [ ] Support more devices
 
 
