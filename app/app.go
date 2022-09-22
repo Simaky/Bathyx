@@ -27,12 +27,14 @@ func RunTray(appName string) {
 }
 
 func (t *TrayApp) onReady() {
-	systray.SetIcon(resources.HeadphonesNotConnectedIcon)
+	systray.SetIcon(resources.Logo)
 	// TODO show always if connected more than 1 device
 	systray.SetTitle("Bathyx")
 	systray.SetTooltip("Waiting for headphones...")
 
-	systray.AddMenuItem(t.appName, "https://github.com/Simaky/Bathyx").Disable()
+	appItem := systray.AddMenuItem(t.appName, "https://github.com/Simaky/Bathyx")
+	appItem.SetIcon(resources.Logo)
+	appItem.Disable()
 	systray.AddSeparator()
 
 	// TODO show only if 1 device is connected
@@ -61,11 +63,14 @@ func loadDevices(ctx context.Context, d *devices.Devices, item *systray.MenuItem
 
 func processDeviceInfo(deviceInfo types.DeviceInfo, item *systray.MenuItem) {
 	if deviceInfo.Error != nil {
+		systray.SetIcon(resources.Logo)
+		item.SetTitle("HyperX Cloud Flight S: waiting...")
 		log.Println(deviceInfo.Error)
 		return
 	}
 
 	if !deviceInfo.Connected {
+		systray.SetIcon(resources.Logo)
 		item.SetTitle("HyperX Cloud Flight S: waiting...")
 		return
 	}

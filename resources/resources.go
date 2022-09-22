@@ -3,6 +3,9 @@ package resources
 import _ "embed"
 
 var (
+	//go:embed images/logo.ico
+	Logo []byte
+
 	//go:embed images/headphones_icon.ico
 	HeadphonesIcon []byte
 

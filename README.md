@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Simaky/Bathyx">
-    <!--<img src="images/logo.png" alt="Logo" width="80" height="80">-->
+    <img src=".github/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 id="readme-top" align="center">Bathyx</h3>
