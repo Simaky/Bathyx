@@ -122,10 +122,11 @@ To use Bathyx as library just simply do:
 - [x] Add Tray application
 - [x] Add README.md
 - [x] Add "components" document to easily copy & paste sections of the readme
+- [ ] Use interfaces to make adding new devices much more easier
 - [ ] Support more devices
 
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Simaky/Bathyx/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
