@@ -21,17 +21,17 @@ func New() *Devices {
 func (d *Devices) CloudFlightS(ctx context.Context, timeout time.Duration) chan types.DeviceInfo {
 	deviceInfoC := make(chan types.DeviceInfo)
 
-	device, err := findDevice()
-	if err != nil {
-		go d.processError(err, deviceInfoC)
-		return deviceInfoC
-	}
-
 	go func() {
 		defer close(deviceInfoC)
 
 		for {
-			deviceInfoC <- getCloudFlightSInfo(device) // to run first time immediately
+			// to run first time immediately
+			device, err := findDevice()
+			if err != nil {
+				go d.processError(err, deviceInfoC)
+				continue
+			}
+			deviceInfoC <- getCloudFlightSInfo(device)
 
 			select {
 			case <-time.Tick(timeout):

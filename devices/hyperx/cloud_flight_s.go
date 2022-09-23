@@ -18,7 +18,7 @@ const (
 
 	validResponseLength = 62
 
-	defaultReadTimeout = time.Second * 30
+	defaultReadTimeout = time.Second * 10
 	maxBufferSize      = 2048
 )
 

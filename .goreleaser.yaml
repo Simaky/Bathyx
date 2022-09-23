@@ -1,6 +1,9 @@
 project_name: Bathyx
 builds:
-  - goos:
+  - flags:
+      - -ldflags
+      - -H=windowsgui
+    goos:
       - windows
     goarch:
       - amd64
