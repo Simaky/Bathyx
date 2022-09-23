@@ -1,0 +1,12 @@
+project_name: Bathyx
+builds:
+  - goos:
+      - windows
+    goarch:
+      - amd64
+      - arm64
+nfpms:
+  - maintainer: Simaky
+    description: Bathyx Project
+    homepage: https://github.com/Simaky/Bathyx
+    license: MIT
