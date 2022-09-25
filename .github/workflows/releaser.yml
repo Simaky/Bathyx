@@ -10,20 +10,20 @@ permissions:
 
 jobs:
   goreleaser:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Installing needed Ubuntu dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libayatana-appindicator3-dev
+      - run: git fetch --force --tags
       - name: Setup Golang
         uses: actions/setup-go@v3
-      - name: go mod download
-        run: go mod download
+        with:
+          go-version-file: './go.mod'
+          cache: false
+      - name: Setup WinRes
+        run: go install github.com/tc-hib/go-winres@latest
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:

@@ -14,6 +14,9 @@ import (
 	"github.com/Simaky/Bathyx/resources"
 )
 
+// timeout for CPU usage optimisation.
+const timeout = time.Second * 5
+
 type TrayApp struct {
 	appName string
 }
@@ -50,20 +53,28 @@ func (t *TrayApp) onReady() {
 		os.Exit(0)
 	}()
 
-	go loadDevices(context.Background(), devices.New(), item)
+	loadDevices(context.Background(), devices.New(), item)
 }
 
 func (*TrayApp) onExit() {}
 
+// nolint:gosimple
 func loadDevices(ctx context.Context, d *devices.Devices, item *systray.MenuItem) {
+	cloudFlightSC := d.HyperX.CloudFlightS(ctx, timeout)
+
+	// TODO remove nolint after adding more devices to select
 	for {
-		processDeviceInfo(<-d.HyperX.CloudFlightS(ctx, time.Minute*1), item)
+		select {
+		case resp := <-cloudFlightSC:
+			processDeviceInfo(resp, item)
+		}
 	}
 }
 
 func processDeviceInfo(deviceInfo types.DeviceInfo, item *systray.MenuItem) {
 	if deviceInfo.Error != nil {
 		systray.SetIcon(resources.Logo)
+		systray.SetTooltip("Waiting for headphones...")
 		item.SetTitle("HyperX Cloud Flight S: waiting...")
 		log.Println(deviceInfo.Error)
 		return
@@ -71,6 +82,7 @@ func processDeviceInfo(deviceInfo types.DeviceInfo, item *systray.MenuItem) {
 
 	if !deviceInfo.Connected {
 		systray.SetIcon(resources.Logo)
+		systray.SetTooltip("Waiting for headphones...")
 		item.SetTitle("HyperX Cloud Flight S: waiting...")
 		return
 	}

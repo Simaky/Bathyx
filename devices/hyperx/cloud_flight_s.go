@@ -1,7 +1,6 @@
 package hyperx
 
 import (
-	"context"
 	"fmt"
 	"log"
 	"time"
@@ -18,7 +17,7 @@ const (
 
 	validResponseLength = 62
 
-	defaultReadTimeout = time.Second * 30
+	defaultReadTimeout = time.Second * 10
 	maxBufferSize      = 2048
 )
 
@@ -140,24 +139,13 @@ func readWithTimeout(device *hid.Device, timeout time.Duration) ([]byte, int, er
 	)
 
 	buf := make([]byte, maxBufferSize)
-	ctx, cancel := context.WithCancel(context.Background())
 
-	go func() {
-		defer cancel()
-
-		// TODO Update lib to support ctx with cancel
-		read, err = device.Read(buf)
-		if err != nil {
-			err = fmt.Errorf("can't read from device, err: %w", err)
-			log.Println(err)
-			return
-		}
-	}()
-
-	select {
-	case <-ctx.Done():
-		return buf, read, err
-	case <-time.Tick(timeout):
+	read, err = device.ReadWithTimeout(buf, int(timeout))
+	if err != nil {
+		err = fmt.Errorf("can't read from device, err: %w", err)
+		log.Println(err)
 		return nil, 0, types.ErrDeviceNotEnabled
 	}
+
+	return buf, read, err
 }
