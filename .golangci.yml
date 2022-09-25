@@ -78,6 +78,7 @@ linters-settings:
       - G107
       - G401
       - G505
+      - G108
 
   govet:
     check-shadowing: true

@@ -32,7 +32,7 @@ func (d *Devices) CloudFlightS(ctx context.Context, timeout time.Duration) chan 
 				continue
 			}
 			deviceInfoC <- getCloudFlightSInfo(device)
-
+			device.Close()
 			select {
 			case <-time.Tick(timeout):
 				continue

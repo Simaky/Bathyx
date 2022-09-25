@@ -14,7 +14,7 @@ import (
 	"github.com/Simaky/Bathyx/resources"
 )
 
-// timeout for CPU usage optimisation
+// timeout for CPU usage optimisation.
 const timeout = time.Second * 5
 
 type TrayApp struct {
@@ -53,14 +53,16 @@ func (t *TrayApp) onReady() {
 		os.Exit(0)
 	}()
 
-	go loadDevices(context.Background(), devices.New(), item)
+	loadDevices(context.Background(), devices.New(), item)
 }
 
 func (*TrayApp) onExit() {}
 
+// nolint:gosimple
 func loadDevices(ctx context.Context, d *devices.Devices, item *systray.MenuItem) {
 	cloudFlightSC := d.HyperX.CloudFlightS(ctx, timeout)
 
+	// TODO remove nolint after adding more devices to select
 	for {
 		select {
 		case resp := <-cloudFlightSC:

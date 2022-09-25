@@ -1,13 +1,13 @@
 project_name: Bathyx
 builds:
-  - flags:
-      - -ldflags
-      - -H=windowsgui
-    goos:
+  - goos:
       - windows
     goarch:
       - amd64
-      - arm64
+    env:
+      - CGO_ENABLED=1
+    ldflags:
+      - -H=windowsgui
 archives:
   - format: binary
 nfpms:
