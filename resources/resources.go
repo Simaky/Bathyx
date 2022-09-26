@@ -5,6 +5,11 @@ import (
 	"fmt"
 )
 
+const (
+	maxPercent = 100
+	minPercent = 10
+)
+
 var (
 	//go:embed images/logo.ico
 	Logo []byte
@@ -70,10 +75,10 @@ func GetBatteryIcon(percentage int) ([]byte, error) {
 
 func roundPercentage(percentage int) int {
 	if percentage <= 0 {
-		return 10
+		return minPercent
 	}
-	if percentage > 100 {
-		return 100
+	if percentage > maxPercent {
+		return maxPercent
 	}
 
 	if percentage%10 == 0 {
