@@ -13,6 +13,11 @@ output:
 
 # All available settings of specific linters.
 linters-settings:
+  gomnd:
+    ignored-numbers:
+      - '0'
+      - '10'
+      - '100'
   cyclop:
     max-complexity: 12
     skip-tests: true

@@ -95,26 +95,10 @@ func setBatteryPercent(menuItem *systray.MenuItem, percentage int) {
 	systray.SetTooltip(title)
 	menuItem.SetTitle(title)
 
-	switch {
-	case percentage <= 10:
-		systray.SetIcon(resources.BatteryIcon10)
-	case percentage <= 20:
-		systray.SetIcon(resources.BatteryIcon20)
-	case percentage <= 30:
-		systray.SetIcon(resources.BatteryIcon30)
-	case percentage <= 40:
-		systray.SetIcon(resources.BatteryIcon40)
-	case percentage <= 50:
-		systray.SetIcon(resources.BatteryIcon50)
-	case percentage <= 60:
-		systray.SetIcon(resources.BatteryIcon60)
-	case percentage <= 70:
-		systray.SetIcon(resources.BatteryIcon70)
-	case percentage <= 80:
-		systray.SetIcon(resources.BatteryIcon80)
-	case percentage <= 90:
-		systray.SetIcon(resources.BatteryIcon90)
-	case percentage <= 100:
-		systray.SetIcon(resources.BatteryIcon100)
+	batteryIcon, err := resources.GetBatteryIcon(percentage)
+	if err != nil {
+		log.Println(err)
+		return
 	}
+	systray.SetIcon(batteryIcon)
 }

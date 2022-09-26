@@ -28,7 +28,15 @@ func getCloudFlightSInfo(device *hid.Device) types.DeviceInfo {
 		return types.DeviceInfo{Error: err}
 	}
 
-	percentage, err := readBatteryPercentage(device)
+	var percentage int
+	for i := 1; i <= 5; i++ { // 5 retries
+		percentage, err = readBatteryPercentage(device)
+		if err == nil {
+			break
+		}
+		log.Printf("attempt [%d] can't get battery percentage, err: %s", i, err)
+	}
+
 	if err != nil {
 		return types.DeviceInfo{Error: err}
 	}
