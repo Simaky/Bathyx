@@ -122,6 +122,9 @@ To use Bathyx as library just simply do:
 - [x] Add Tray application
 - [x] Add README.md
 - [x] Add "components" document to easily copy & paste sections of the readme
+- [ ] Add "Start with Windows" checkbox
+- [ ] Add white icon/theme and ability to change
+- [ ] Use other lib for UI with ability to add settings
 - [ ] Use interfaces to make adding new devices much more easier
 - [ ] Support more devices
 

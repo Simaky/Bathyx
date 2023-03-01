@@ -17,7 +17,7 @@ const (
 
 	validResponseLength = 62
 
-	defaultReadTimeout = time.Second * 10
+	defaultReadTimeout = time.Second * 2
 	maxBufferSize      = 2048
 )
 
@@ -148,7 +148,7 @@ func readWithTimeout(device *hid.Device, timeout time.Duration) ([]byte, int, er
 
 	buf := make([]byte, maxBufferSize)
 
-	read, err = device.ReadWithTimeout(buf, int(timeout))
+	read, err = device.ReadWithTimeout(buf, int(timeout.Milliseconds()))
 	if err != nil {
 		err = fmt.Errorf("can't read from device, err: %w", err)
 		log.Println(err)
